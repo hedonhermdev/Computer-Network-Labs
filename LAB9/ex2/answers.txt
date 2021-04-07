@@ -1,0 +1,10 @@
+Try to answer following questions:
+
+1.Even after the link-failure does node $n(0) continues to send packets constantly. Why?
+UDP does not know because of lack of reliability, congestion control, etc.
+
+2.Try the same simulation with TCP traffic and answer Q1.
+TCP stops receiving ACK on link failure so it thinks that the node is congested and it does congestion control. It lowers down it's send rate.
+
+3.Why node $n(0) is not using the alternate path after the link-failure?
+Due to static routing.

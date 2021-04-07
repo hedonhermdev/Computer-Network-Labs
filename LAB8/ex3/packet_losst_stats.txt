@@ -1,0 +1,2 @@
+TCP packet lost: 25
+UDP packet lost: 0

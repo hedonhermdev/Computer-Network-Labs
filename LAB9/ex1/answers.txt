@@ -1,0 +1,17 @@
+1. What is TCP synchronization problem? In which case it is more prominent.
+Occurs when a sudden burst of traffic causes simultaneous packet loss across many TCP sessions using a single (congested) link. Each affected TCP session backs off its send rate at the same time, causing link utilization to go way down.
+
+
+2. Which queuing mechanism (Drop Tail or RED) is better for bursty traffic?
+According to sir it should be RED as it drops or marks once avg queue size crosses the max threshold. BUT according to my stats, RED is droppping more packets with similar throughput (run `awk -f calc_stats.awk outall.tr` to get stats)
+
+
+3. Observe  the  Queue  size  variation  in  both  the  cases.  Compare  both  the  methods  w.r.t  queuing delay.
+
+
+
+4. How does changing the RED parameters affect the plots?
+
+
+
+5. Add one more TCP flow on any of the node (n0/n3). Change queue-size to 30 on n1-n2 link and 3Mbps bandwidth instead of 2 Mbps on n0-n1 & n3-n1.  Analyze whether the pattern continues.

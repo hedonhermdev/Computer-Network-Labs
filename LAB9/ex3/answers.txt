@@ -1,0 +1,13 @@
+Try to answer following questions:
+
+1.We specified the link-failure for a duration of 1s and adverIntervalto 4s in task 5. How does node $n(0) detected link-failure without the periodic updates?
+???
+
+2.Can  you  guess  the  default advertIntervalapproximately  using  the  trace  files?  (Hint:  Run simulation without link-failure).
+Yes, around 0.003
+
+3.Why to use routing protocols if we can just avoid link-failures as you did in Task-6.
+???
+
+4.Is it possible to simulate the Count-to-Infinity problem using DV protocol in the given topology?
+???
