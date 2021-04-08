@@ -9,6 +9,8 @@
 #define BUFLEN 512  // Max length of buffer
 #define PORT 8882   // The port on which to listen for incoming data
 
+// if on, discard received data randomly
+// that is, do not send ACK for it
 int DEBUG = 1;
 
 void die(char *s)
@@ -44,7 +46,7 @@ int main(void)
   }
 
   // zero out the structure
-  memset((char *)&si_me, 0, sizeof(si_me));
+  memset(&si_me, 0, sizeof(si_me));
 
   si_me.sin_family = AF_INET;
   si_me.sin_port = htons(PORT);

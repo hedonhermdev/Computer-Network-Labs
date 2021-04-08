@@ -32,6 +32,8 @@ void die(char *s)
   exit(1);
 }
 
+// if on, randomly discard ACK received
+// that is, simulate data packet loss
 int DEBUG = 1;
 int flag = 0;
 struct sockaddr_in si_other;
