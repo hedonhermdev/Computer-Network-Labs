@@ -1,0 +1,18 @@
+---
+1. Explain the meaning of first line of the output.
+> tracing route to IP 172.217.23.238 with max hops (max number of routers allowed in between / max ttl) 30 and packet size 60 bytes
+
+2. The next two lines in the output begin with the TTL, followed by the name of the host or router its IP address and three different time values. What these time values signifies?
+> 3 different RTTs to avoid variance
+
+3. How we can calculate the per hop time value?
+> RTT [current hop] - RTT [previous hop]
+---
+
+---
+1. Did you observe the character * in few lines of the output for any of the trace route? If yes, then what does it mean?
+> Packet loss
+
+2. Did you see the last hop in your output as the destination you are looking for? If no, then what could be the reason for this?
+> I did.
+---

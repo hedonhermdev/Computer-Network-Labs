@@ -1,0 +1,34 @@
+--- PART 1: nslookup bits-pilani.ac.in ---
+1. Locate the DNS query and response messages. Are they sent over UDP or TCP?
+> UDP
+
+2. To what IP address is the DNS query message sent? 
+> 2405:201:4013:cd54::c0a8:1d01
+
+3. What is the destination port for the DNS query message? 
+> 53
+
+4. What is the source port of DNS response message?
+> 64748
+
+5. Examine the DNS responsemessage.
+> Got 2 IPs: 103.144.92.33 and 14.139.243.20
+--- END ---
+
+
+--- PART 2: nslookup -type=NS bits-pilani.ac.in ---
+1. Locate the DNS query and response messages. Are they sent over UDP or TCP?
+> UDP
+
+2. To what IP address is the DNS query message sent? 
+> 2405:201:4013:cd54::c0a8:1d01
+
+3. What is the destination port for the DNS query message? 
+> 53
+
+4. What is the source port of DNS response message?
+> 57323
+
+5. Examine the DNS responsemessage.
+> Got 3 nameserver records: ns1.bits-pilani.ac.in ns2.bits-pilani.ac.in ns3.bits-pilani.ac.in
+--- END ---

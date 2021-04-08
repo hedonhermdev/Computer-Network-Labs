@@ -1,0 +1,41 @@
+1.  What  is the  sequence  number  of  the  TCP  SYN  segment  that  is  used  to  initiate  the  TCP connection between the client computer and www.bits-pilani.ac.in? What is it in the segment that identifies the segment as a SYN segment?
+> Seq num: 0
+> SYN flag is set
+
+2.  What  is  the  sequence  number  of  the  SYNACK  segment  sent  by www.bits-pilani.ac.into  the client  computer  in  reply  to  the  SYN?  What  is  the  value  of  the  Acknowledgement  field  in  the SYNACK  segment?  How  did www.bits-pilani.ac.in determine  that  value?  What  is  it  in  the segment that identifies the segment as a SYNACK segment?Hint: Observe the middle window in your trace for the specified packet
+> Seq = 0, Ack = 1
+> SYN and ACK flags are set
+
+3. The sequence numbers that you observed so far in your trace are the actual sequence numbers? Is it overruling the things which you read in the text? Don’t be confused. Are you really wanted to know  the  actual  things?  Follow  Edit->preferences->protocols->tcp  and  unmark  the  Relative Sequence Number and Window Scaling. Now check the sequence numbers in your trace. Did you observe any change? Explain the reason.
+> No, actual initial seq nums are random. Wireshark provides offset.
+> Yes, now actual numbers can be seen but the relative changes remain same.
+
+4. What is the length of each of the first three TCP segments for http://www.robio2018.org/?
+> 78 [SYN], 74 [SYN ACK], 66 [ACK]
+
+5. Are there any retransmitted segments in the trace file? What did you check for (in the trace) in order to answer this question?
+> No
+> Filter "tcp.analysis.retransmission || tcp.analysis.fast_retransmission"
+> Alternatively, the seq num would be same
+
+6. What is the throughput (average bytes transferred per unit time) for the TCP connection? (Select different TCP streams for this observation). Hint: Use statistics->TCP Stream Graph->Throughput graph
+> see graph as per hint
+
+7. What proportion of total TCP segments has their PSH flag set? (Hint:  Use  statistics->flow  graph...  or  You  can  set  appropriate Display  filter  to  know  this information..)
+> use filter "tcp.flags.push == 1"
+> or view flow graph
+
+8. Use the Time-Sequence-Graph (Stevens) plotting tool to view the sequence number versus time plot of segments sent between the client and the server. Can you identify where TCP’s slow start phase begins and ends, and where congestion avoidance takes over? 
+***DOUBT***
+
+9. Comment on ways in which the measured data differs from the idealized behavior of TCP that we’ve studied in the text.
+***DOUBT***
+
+10. Where do you find the (advertised) amount of available buffer space at the receiver (the server)? Does the lack of receiver buffer space ever throttle the sender? 
+> "Window" in TCP header
+
+11. What is the overall throughput in bit/s (the average of bits transferred per unit time) for one TCP stream? Explain how you calculate this value.
+> Check the ACK in last packet sent by server (the filter "tcp && ip.src == 47.89.17.62 && tcp.len == 0" can help in identifying last packet sent by server)
+> Or use the throughput graph for identifying first and last packets <-- better method
+> Take time diff of first packet and last packet
+> 979/(14.90 - 10.44) = 219.50 Bytes/sec

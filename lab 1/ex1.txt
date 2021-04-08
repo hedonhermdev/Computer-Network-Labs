@@ -1,0 +1,38 @@
+1. What does \r\n mean after each line?
+> Line break
+
+2. What indicates the end of HTTP message?
+***DOUBT*** > Empty line (this indicates end of header)
+
+3. What is the version of HTTP used? Is it necessary to pass it in message? Why?
+> 1.1
+> Yes, since HTTP has different versions with varying features
+
+4. What type of connection it is: persistent or non-persistent?
+> Persistent, due to present of "Connection: keep-alive" option
+
+5. What is the source IP address and destination IP address?
+> Mentioned in IP header
+
+6. Which TCP protocol does HTTP use?
+> v6
+
+7. What is the source and destination port number?
+> Mentioned in TCP header
+
+8. How long did it take from when the HTTP GET message was sent until HTTP OK reply was received?
+> Simply see time difference
+
+9. What is the difference between date header and Last-modified header in HTTP OK reply.?
+> Date is current time
+> Last modified is the time the origin (server) believes the resource was last modified
+> Last modified may be used as a huerestic for cache checking in case other headers like cache control are missing
+
+10. Although URL specifies the host, why do you think that it is again the part of HTTP GET message?
+***DOUBT***
+
+11. Does HTTP work on specific port? How can it be verified from GET and OK messages.
+> Yes, destination port 80 in GET and source port is 80 in OK
+
+12. You can see a line “Response in Frame: some_number”. What does it mean? Verify your answer.
+> Wireshark reference to the detected response frame for this request

@@ -1,0 +1,38 @@
+--- PART 1 ---
+
+Q1. How many HTTP GET requests are generated?
+> 2 for ktiwari.in/algo (this answer is specific to the URL you visit)
+
+Q2. What can be concluded from your answer of Q1 above?
+> The page has 2 resources (HTML and image)
+
+Q3. What is the status code returned in all HTTP response packets?
+> 200 OK, 404 Not Found
+
+Q4. When were the objects embedded in web page last modified at the server?
+> Check the last-modified header field in HTTP headers
+
+Q5. How many bytes of content are being returned to your browser in each HTTP response packet? 
+> See content-length header in HTTP headers of response
+
+--- END ---
+
+--- PART 2 ---
+
+Q1. What is the date header value and Last Modified value in HTTP response packets?
+> Date is current time
+> Last modified is the time origin thinks resource was last modified
+
+Q2. Are two embedded images fetched from the server or were locally cached? How to verify your answer? Justify the answer to yourself.
+***DOUBT***
+
+--- END ---
+
+--- PART 3 ---
+
+Q1. You will observe that one image is not displayed. Why so?
+> I am guessing it gave 404
+
+Q2. Does path of fist image (corresponding to “sixth edition”) is same as that in step 7 above?
+
+--- END ---
