@@ -39,19 +39,19 @@ proc finish {} {
     close $cwnd_file
     close $nf
     close $tf
-    exec awk -f clac_drop.awk outall.tr > tcp_drop_stats.txt
-    exec xgraph cwnd_file.tr -geometry 800x400 &
+    exec awk -f calc_drop.awk outall.tr > tcp_drop_stats.txt
+    exec xgraph cwnd_tcp.tr -geometry 800x400 &
     exec nam out.nam &
     exit 0
 }
 
 proc plotWindow {} {
-  global cwnd_file n1
+  global cwnd_file tcp0
   set ns [Simulator instance]
   set time .1
   set now [$ns now]
 
-  set cwnd [$n1 set cwnd_]
+  set cwnd [$tcp0 set cwnd_]
   
   puts $cwnd_file "$now $cwnd"
 
