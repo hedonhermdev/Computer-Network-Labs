@@ -21,22 +21,20 @@ int main(void)
     int sockfd = 0;
     int bytesReceived = 0;
     char recvBuff[256];
-    unsigned char buff_offset[10];
-    unsigned char buff_command[2];
+    char buff_offset[10];
+    char buff_command[2];
     int offset;  // required to get the user input for offset in case of partial file command
     int command; // required to get the user input for command memset(recvBuff, '0', sizeof(recvBuff));
     struct sockaddr_in serv_addr;
+    int saddr_len = sizeof(serv_addr);
     /* Create a socket first */
-    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
         errExit("Error : Could not create socket \n");
 
     /* Initialize sockaddr_in data structure */
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(5001); // port
     serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    /* Attempt a connection */
-    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
-        errExit("Error : Connect Failed \n");
 
     /* Create file where data will be stored */
     FILE *fp;
@@ -59,7 +57,7 @@ int main(void)
     sprintf(buff_command, "%d", command);
 
     // send command to server
-    write(sockfd, buff_command, 2);
+    sendto(sockfd, buff_command, 2, 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
 
     if (command == 1 || command == 2) // We need to specify the offset
     {
@@ -71,17 +69,17 @@ int main(void)
         // otherwise offset = size of local partial file, that we have already calculated
         sprintf(buff_offset, "%d", offset);
         /* sending the value of file offset */
-        write(sockfd, buff_offset, 10);
+        sendto(sockfd, buff_offset, 10, 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
     }
 
     // Else { command = 0 then no need to send the value of offset }
     /* Receive data in chunks of 256 bytes */
-    while ((bytesReceived = read(sockfd, recvBuff, 256)) > 0)
+    while ((bytesReceived = recvfrom(sockfd, recvBuff, 256, 0, (struct sockaddr *)&serv_addr, (socklen_t *)&saddr_len)) > 0)
     {
         printf("Bytes received %d\n", bytesReceived);
-        // recvBuff[n] = 0;
         fwrite(recvBuff, 1, bytesReceived, fp);
-        // printf("%s \n", recvBuff);
+        if (bytesReceived < 256)
+            break;
     }
     if (bytesReceived < 0)
     {

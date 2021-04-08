@@ -1,4 +1,5 @@
-/* Server program for broken ftp */
+/* Server program for broken ftp using UDP */
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -18,11 +19,11 @@ void errExit(const char *err)
 int main(void)
 {
     int listenfd = 0;
-    int connfd = 0;
-    struct sockaddr_in serv_addr;
+    struct sockaddr_in serv_addr, client_addr;
+    int client_len = sizeof(client_addr);
     char sendBuff[1025];
     int numrv;
-    listenfd = socket(AF_INET, SOCK_STREAM, 0); // TCP socket
+    listenfd = socket(AF_INET, SOCK_DGRAM, 0); // UDP socket
     if (listenfd == -1)
         errExit("socket()");
 
@@ -35,21 +36,15 @@ int main(void)
     if (bind(listenfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1)
         errExit("bind()");
 
-    if (listen(listenfd, 10) == -1)
-        errExit("listen()");
-
     while (1)
     {
-        unsigned char offset_buffer[10] = {'\0'};
-        unsigned char command_buffer[2] = {'\0'};
+        char offset_buffer[10] = {'\0'};
+        char command_buffer[2] = {'\0'};
         int offset;
         int command;
-        connfd = accept(listenfd, (struct sockaddr *)NULL, NULL);
-        if (connfd == -1)
-            errExit("accept()");
 
         printf("Waiting for client to send the command: Full File (0) or Partial File (1/2)...\n");
-        while (read(connfd, command_buffer, 2) == 0)
+        while (recvfrom(listenfd, command_buffer, 2, 0, (struct sockaddr *)&client_addr, (socklen_t *)&client_len) == 0)
             ;
         sscanf(command_buffer, "%d", &command);
         if (command == 0)
@@ -57,7 +52,7 @@ int main(void)
         else
         {
             printf("Waiting for client to send the offset...\n");
-            while (read(connfd, offset_buffer, 10) == 0)
+            while (recvfrom(listenfd, command_buffer, 2, 0, (struct sockaddr *)&client_addr, (socklen_t *)&client_len) == 0)
                 ;
             sscanf(offset_buffer, "%d", &offset);
         }
@@ -79,7 +74,7 @@ int main(void)
             if (nread > 0)
             {
                 printf("Sending \n");
-                write(connfd, buff, nread);
+                sendto(listenfd, buff, nread, 0, (struct sockaddr *)&client_addr, client_len);
             }
 
             /*
@@ -96,7 +91,6 @@ int main(void)
             }
         }
 
-        close(connfd);
         sleep(1);
     }
     return 0;

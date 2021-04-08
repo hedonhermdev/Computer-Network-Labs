@@ -10,7 +10,7 @@
 void die(char *s)
 {
     perror(s);
-    exit(1);
+    exit(EXIT_FAILURE);
 }
 
 int main(void)
@@ -20,11 +20,9 @@ int main(void)
     char buf[BUFLEN];
     char message[BUFLEN];
     if ((s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1)
-    {
         die("socket");
-    }
 
-    memset((char *)&si_other, 0, sizeof(si_other));
+    memset(&si_other, 0, sizeof(si_other));
     si_other.sin_family = AF_INET;
     si_other.sin_port = htons(PORT);
     si_other.sin_addr.s_addr = inet_addr("127.0.0.1");
@@ -32,20 +30,19 @@ int main(void)
     while (1)
     {
         printf("Enter message : ");
-        gets(message);
+        scanf(" %s", message);
         //send the message
         if (sendto(s, message, strlen(message), 0, (struct sockaddr *)&si_other, slen) == -1)
-        {
             die("sendto()");
-        }
+
         //receive a reply and print it
-        //clear the buffer by filling null, it might have previously received data memset(buf,'\0', BUFLEN);
+        //clear the buffer by filling null, it might have previously received data
+        memset(buf, '\0', BUFLEN);
         //try to receive some data, this is a blocking call
         if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr *)&si_other, &slen) == -1)
-        {
             die("recvfrom()");
-        }
-        puts(buf);
+
+        printf("Reply: %s\n", buf);
     }
     close(s);
     return 0;
