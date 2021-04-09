@@ -10,7 +10,7 @@ BEGIN {
     if ($1 == "r" && $4 == 2 && $5 == "tcp" && $6 >= 512) {
         if ($2 > stopTime)
             stopTime = $2
-        recvd_sz++;
+        recvd_sz+=$6;
     }
     if ($1 == "d" && $4 == 2 && $5 == "tcp") {
         drop_cnt++
