@@ -2,6 +2,7 @@ Answer the following questions.
 
 1. Did you see an OPTS request going from client to server? What is the purpose of this command?
 ***DOUBT***
+> https://www.serv-u.com/resource/tutorial/feat-opts-help-stat-nlst-xcup-xcwd-ftp-command
 
 2. Locate the PORT command in the Wireshark trace and try to correlate it with the command entered by you in the ftp terminal. Analyze the parameters of PORT command.
 > locate using filter "ftp and ip.addr == 192.168.29.202"

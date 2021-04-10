@@ -11,7 +11,7 @@
 4. What is the source port of DNS response message?
 > 64748
 
-5. Examine the DNS responsemessage.
+5. Examine the DNS response message.
 > Got 2 IPs: 103.144.92.33 and 14.139.243.20
 --- END ---
 
@@ -29,6 +29,6 @@
 4. What is the source port of DNS response message?
 > 57323
 
-5. Examine the DNS responsemessage.
+5. Examine the DNS response message.
 > Got 3 nameserver records: ns1.bits-pilani.ac.in ns2.bits-pilani.ac.in ns3.bits-pilani.ac.in
 --- END ---
