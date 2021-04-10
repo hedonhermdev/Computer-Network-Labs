@@ -2,8 +2,8 @@
 set ns [new Simulator]
 
 # setup tracing
-set f0 [open udp_drop.tr w]
-# set f1 [open tcp_jitter.tr w]
+set f0 [open tcp_throughput.tr w]
+set f1 [open udp_throughput.tr w]
 set nf [open out.nam w]
 $ns namtrace-all $nf
 set tf [open outall.tr w]
@@ -25,52 +25,21 @@ $ns queue-limit $n2 $n3 5
 
 # define finish procedure
 proc finish {} {
-    global f0 nf tf ns
+    global f0 f1 nf tf ns
     $ns flush-trace
     close $f0
-    # close $f1
+    close $f1
     close $nf
     close $tf
     exec awk -f calc_jitter.awk outall.tr > tcp_jitter.tr
+    exec awk -f calc_udp_drop.awk outall.tr > udp_drop.tr
+    exec awk -f calc_throughput.awk outall.tr
     exec xgraph udp_drop.tr -geometry 800x400 &
     exec xgraph tcp_jitter.tr -geometry 800x400 &
-    # exec nam out.nam &
+    exec xgraph tcp_throughput.tr udp_throughput.tr -geometry 800x400 &
+    exec nam out.nam &
     exit 0
 }
-
-# define record analytics procedure
-proc record_udp_drop {} {
-    global sink0 f0
-    
-    set ns [Simulator instance]
-    
-    set time .5
-
-    set now [$ns now]
-    
-    set lostUdp [$sink0 set nlost_]
-    # bandwidth in Mbit/s
-    puts $f0 "$now $lostUdp"
-
-    $sink0 set nlost_ 0
-
-    $ns at [expr $now+$time] "record_udp_drop"
-}
-
-# proc record_tcp_jitter { last_pkt_time } {
-#     global sink1 f1
-    
-#     set ns [Simulator instance]
-    
-#     set time .05
-
-#     set now [$ns now]
-
-#     set tcp_pkt_time [$sink1 set bytes_]
-#     puts $f1 "$now [expr $tcp_pkt_time - $last_pkt_time]"
-
-#     $ns at [expr $now+$time] "record_tcp_jitter $tcp_pkt_time"
-# }
 
 # attach UDP agents & traffic to 0->2 link
 set udp0 [new Agent/UDP]
@@ -95,8 +64,6 @@ $ftp attach-agent $tcp0
 $ns connect $tcp0 $sink1
 
 # log & run
-$ns at 0.0 "record_udp_drop"
-# $ns at 0.0 "record_tcp_jitter 0"
 $ns at 0.0 "$ftp start"
 $ns at 5.0 "$cbr start"
 $ns at 10.0 "$ftp stop"
