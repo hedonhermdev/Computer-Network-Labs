@@ -24,15 +24,16 @@ Q1. What is the date header value and Last Modified value in HTTP response packe
 > Last modified is the time origin thinks resource was last modified
 
 Q2. Are two embedded images fetched from the server or were locally cached? How to verify your answer? Justify the answer to yourself.
-***DOUBT***
+> There is no request for a resource in Wireshark if the resource is fetched from cache
 
 --- END ---
 
 --- PART 3 ---
 
 Q1. You will observe that one image is not displayed. Why so?
-> I am guessing it gave 404
+> 404 Not Found
 
 Q2. Does path of fist image (corresponding to “sixth edition”) is same as that in step 7 above?
+> Nope
 
 --- END ---

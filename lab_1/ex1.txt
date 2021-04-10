@@ -1,8 +1,9 @@
 1. What does \r\n mean after each line?
-> Line break
+> Carriage return, line feed
 
 2. What indicates the end of HTTP message?
-***DOUBT*** > Empty line (this indicates end of header)
+> The end of HTTP headers is defined by an empty line (\r\n)
+> The end of the complete message is defined by the end of the data that has size (number of bytes) specified in header
 
 3. What is the version of HTTP used? Is it necessary to pass it in message? Why?
 > 1.1
@@ -29,7 +30,11 @@
 > Last modified may be used as a huerestic for cache checking in case other headers like cache control are missing
 
 10. Although URL specifies the host, why do you think that it is again the part of HTTP GET message?
-***DOUBT***
+> The "Host" header field in a request provides the host and port
+information from the target URI, enabling the origin server to
+distinguish among resources while servicing requests for multiple
+host names on a single IP address.
+> In name-based virtual hosting, also called shared IP hosting, the virtual hosts serve multiple hostnames on a single machine with a single IP address. This is possible because when a web browser requests a resource from a web server using HTTP/1.1 it includes the requested hostname as part of the request.
 
 11. Does HTTP work on specific port? How can it be verified from GET and OK messages.
 > Yes, destination port 80 in GET and source port is 80 in OK

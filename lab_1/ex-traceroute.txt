@@ -1,3 +1,5 @@
+Command: traceroute -m 30 172.217.23.238 60
+
 ---
 1. Explain the meaning of first line of the output.
 > tracing route to IP 172.217.23.238 with max hops (max number of routers allowed in between / max ttl) 30 and packet size 60 bytes
@@ -15,4 +17,5 @@
 
 2. Did you see the last hop in your output as the destination you are looking for? If no, then what could be the reason for this?
 > I did.
+> If you don't, the destination is more than 30 routers far.
 ---
