@@ -56,7 +56,6 @@ void sigAlrmHandler(int sig_num)
 
   printf("<< Timed out, retransmitting packet... >>\n");
   sendPacket(s, send_pkt, si_other); // retransmit last sent packet
-  alarm(5);                          // reset timeout alarm
   flag = 1;
 }
 
