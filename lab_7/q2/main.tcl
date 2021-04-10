@@ -2,8 +2,6 @@
 set ns [new Simulator]
 
 # setup tracing
-set f0 [open tcp_throughput.tr w]
-set f1 [open udp_throughput.tr w]
 set nf [open out.nam w]
 $ns namtrace-all $nf
 set tf [open outall.tr w]
@@ -25,10 +23,8 @@ $ns queue-limit $n2 $n3 5
 
 # define finish procedure
 proc finish {} {
-    global f0 f1 nf tf ns
+    global nf tf ns
     $ns flush-trace
-    close $f0
-    close $f1
     close $nf
     close $tf
     exec awk -f calc_jitter.awk outall.tr > tcp_jitter.tr
